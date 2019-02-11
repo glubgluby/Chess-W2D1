@@ -99,7 +99,7 @@ class Cursor
   end
 
   def update_pos(diff)
-    mapped = cursor_pos.map.with_index {|_,i| cursor.pos[i] + diff[i]}
+    mapped = cursor_pos.map.with_index {|_,i| cursor_pos[i] + diff[i]}
     if board.valid_pos?(mapped)
         self.cursor_pos = mapped
     end

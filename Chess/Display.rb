@@ -19,6 +19,16 @@ class Display
     #     curr_cursor = cursor.cursor_pos
     # end
 
+    def loop_test
+        x = false
+        until x == true
+            render
+            cursor.get_input
+            system("clear")
+        end
+        
+    end
+
     def render
         board.each do |row|
             row.each do |tile|
