@@ -4,8 +4,8 @@ KEYMAP = {
   " " => :space,
   "h" => :left,
   "j" => :down,
-  "k" => :up,
-  "l" => :right,
+  "u" => :up,
+  "k" => :right,
   "w" => :up,
   "a" => :left,
   "s" => :down,
@@ -31,8 +31,8 @@ MOVES = {
 }
 
 class Cursor
-
-  attr_reader :cursor_pos, :board
+    attr_accessor :cursor_pos
+  attr_reader :board
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
@@ -76,8 +76,28 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+    when :up
+        up = MOVES[:up] #[-1, 0]
+        update_pos(up)
+    when :down
+        d = MOVES[:down] #[1, 0]
+        update_pos(d)
+    when :left
+        l = MOVES[:left] #[0, -1]
+        update_pos(l)
+    when :right
+        ri = MOVES[:right] #[0, 1]
+        update_pos(ri)
+    when :space || :return
+        cursor_pos
+    when :ctrl_c
+        Process.exit(0)
+    end
   end
 
   def update_pos(diff)
+    cursor_pos.map!.with_index {|_,i| cursor.pos[i] + diff[i]}
+    nil
   end
 end
