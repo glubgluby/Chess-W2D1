@@ -93,11 +93,16 @@ class Cursor
         cursor_pos
     when :ctrl_c
         Process.exit(0)
+    else
+        nil
     end
   end
 
   def update_pos(diff)
-    cursor_pos.map!.with_index {|_,i| cursor.pos[i] + diff[i]}
+    mapped = cursor_pos.map.with_index {|_,i| cursor.pos[i] + diff[i]}
+    if board.valid_pos?(mapped)
+        self.cursor_pos = mapped
+    end
     nil
   end
 end
